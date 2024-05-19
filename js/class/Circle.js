@@ -1,13 +1,10 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, DEMI_BLOCK } from "../config.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH,  BLOCK } from "../config.js";
 
 export default class Circle {
         
-    constructor({ position, width = 16 }) {
+    constructor({ position, width = BLOCK }) {
         this.position = position;
-        this.velocity = {
-            x: 0, //DEMI_BLOCK / 2,
-            y: DEMI_BLOCK / 2
-        };
+        this.velocity = { x: 0, y: 0 };
         this.width = width;
         this.color = 'rgba(255, 0, 0, 0.5)';
     }
@@ -52,16 +49,13 @@ export default class Circle {
 
     chekForBlockCollisions(block) {  
         let angle = 4;
-        if (this.position.x  > block.position.x && 
+        if (this.position.x > block.position.x && 
             this.position.x < block.position.x + block.width &&
-            this.position.y > block.position.y &&
-            this.position.y < block.position.y + block.height
+            this.position.y + this.width > block.position.y &&
+            this.position.y - this.width < block.position.y + block.height
         ) {
             this.velocity.y = -this.velocity.y;            
-            this.velocity.x = Math.ceil(((this.position.x - block.position.x) - (block.width / 2)) / angle);
-            console.log(Math.ceil(((this.position.x - block.position.x) - (block.width / 2)) / angle));
+            this.velocity.x = Math.ceil(((this.position.x - block.position.x) - (block.width / 2)) / angle);            
         }
     }
-
-
 }
