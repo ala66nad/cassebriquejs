@@ -1,14 +1,15 @@
 import { BLOCK } from "../config.js";
 
 export default class Block {
-    constructor({ position, height = BLOCK }) {
+    constructor(position, height = BLOCK, color) {
         this.position = position;
         this.width = BLOCK;
         this.height = height;        
+        this.color = this.color;        
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        ctx.fillStyle = this.color;
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 

@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, BLOCK, DEMI_BLOCK } from "./config.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, TWO_BLOCK, DEMI_BLOCK, DEMI_CANVAS_WIDTH } from "./config.js";
 import Bar from "./class/Bar.js";
 import Circle from "./class/Circle.js";
 
@@ -15,18 +15,10 @@ const keys = {
     Space: { pressed: false },
 }
 
-const bar = new Bar({
-    position: { x: CANVAS_WIDTH / 2 - 32, y: CANVAS_HEIGHT - 2 * BLOCK },
-    height: DEMI_BLOCK
-});
-
-const circle = new Circle({
-    position: { x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT - 2.5 * BLOCK },
-    width: DEMI_BLOCK
-})
+const bar = new Bar();
+const circle = new Circle();
 
 const start = () => {
-    window.requestAnimationFrame(start);
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     bar.onKeyPressed(keys);
@@ -36,6 +28,7 @@ const start = () => {
         run = true;
         circle.velocity.y = -DEMI_BLOCK/2
     }
+    window.requestAnimationFrame(start); 
 }
 
 start();

@@ -1,12 +1,13 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH,  BLOCK } from "../config.js";
+import Color from "./Color.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH,  BLOCK, DEMI_BLOCK, DEMI_CANVAS_HEIGHT, DEMI_CANVAS_WIDTH, TWO_BLOCK } from "../config.js";
 
 export default class Circle {
         
-    constructor({ position, width = BLOCK }) {
-        this.position = position;
+    constructor() {
+        this.position = { x: DEMI_CANVAS_WIDTH, y: CANVAS_HEIGHT - TWO_BLOCK - DEMI_BLOCK };
         this.velocity = { x: 0, y: 0 };
-        this.width = width;
-        this.color = 'rgba(255, 0, 0, 0.5)';
+        this.width = DEMI_BLOCK;
+        this.color = Color.hex("#FF0000").withAlpha(0.8).toRgba();//'rgba(255, 0, 0, 0.5)';
     }
 
     update(ctx, block) {
@@ -36,14 +37,14 @@ export default class Circle {
     chekForVerticalCollisions() {
         if (this.position.y >= CANVAS_HEIGHT || this.position.y <= 0) {
             this.velocity.y = -this.velocity.y;
-            this.color = 'rgba(0, 255, 0, 0.5)';
+            this.color = Color.hex("#00FF00").withAlpha(0.8).toRgba();
         }
     }
 
     chekForHorizontalCollisions() {
         if (this.position.x >= CANVAS_WIDTH || this.position.x <= 0) {
             this.velocity.x = -this.velocity.x;
-            this.color = 'rgba(255, 0, 0, 0.5)';
+            this.color = Color.hex("#FF0000").withAlpha(0.8).toRgba();
         }
     }
 
