@@ -1,11 +1,13 @@
 import { BLOCK } from "../config.js";
 
 export default class Block {
-    constructor(position, height = BLOCK, color) {
+    constructor(position, color, height = BLOCK, width = BLOCK) {
         this.position = position;
-        this.width = BLOCK;
+        this.width = width;
         this.height = height;        
-        this.color = this.color;        
+        this.color = color;
+        this.velocity = {x:0, y:0};
+        this.visible = true;
     }
 
     draw(ctx) {
@@ -13,7 +15,7 @@ export default class Block {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
-    update(ctx) {        
+    update(ctx) {
         this.move();
         this.draw(ctx);
     }

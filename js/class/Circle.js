@@ -1,5 +1,5 @@
 import Color from "./Color.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH,  BLOCK, DEMI_BLOCK, DEMI_CANVAS_HEIGHT, DEMI_CANVAS_WIDTH, TWO_BLOCK } from "../config.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, DEMI_BLOCK, DEMI_CANVAS_WIDTH, TWO_BLOCK } from "../config.js";
 
 export default class Circle {
         
@@ -10,9 +10,10 @@ export default class Circle {
         this.color = Color.hex("#FF0000").withAlpha(0.8).toRgba();//'rgba(255, 0, 0, 0.5)';
     }
 
-    update(ctx, block) {
+    update(ctx, block, wall) {
         this.chekForCollisions();
-        this.chekForBlockCollisions(block);
+        this.chekForBlockCollisions(block, true);
+        this.chekForWallCollisions(wall);
         this.move();
         this.draw(ctx);
     }
@@ -47,16 +48,23 @@ export default class Circle {
             this.color = Color.hex("#FF0000").withAlpha(0.8).toRgba();
         }
     }
+ 
+    chekForWallCollisions(wall) {
+        for (const block of wall.blocks.filter(b => b.visible)) {
+            this.chekForBlockCollisions(block, false);        
+        }
+    }
 
-    chekForBlockCollisions(block) {  
-        let angle = 4;
-        if (this.position.x > block.position.x && 
-            this.position.x < block.position.x + block.width &&
+    chekForBlockCollisions(block, bar) {
+        if (this.position.x + this.width > block.position.x && 
+            this.position.x - this.width < block.position.x + block.width &&
             this.position.y + this.width > block.position.y &&
             this.position.y - this.width < block.position.y + block.height
         ) {
-            this.velocity.y = -this.velocity.y;            
-            this.velocity.x = Math.ceil(((this.position.x - block.position.x) - (block.width / 2)) / angle);            
+            this.velocity.y = -this.velocity.y;
+            this.velocity.x = !bar ? this.velocity.x : 
+                                     this.velocity.x = Math.ceil(((this.position.x - block.position.x) - (block.width / 2)) / DEMI_BLOCK);
+            block.visible = false;
         }
     }
 }

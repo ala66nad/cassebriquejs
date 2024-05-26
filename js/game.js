@@ -1,6 +1,7 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, TWO_BLOCK, DEMI_BLOCK, DEMI_CANVAS_WIDTH } from "./config.js";
 import Bar from "./class/Bar.js";
 import Circle from "./class/Circle.js";
+import Wall from "./class/Wall.js";
 
 let run = false;
 const canvas = document.querySelector("canvas");
@@ -15,14 +16,16 @@ const keys = {
     Space: { pressed: false },
 }
 
-const bar = new Bar();
+const wall = new Wall(4);
+const bar = new Bar("#0000FF");
 const circle = new Circle();
 
 const start = () => {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     bar.onKeyPressed(keys);
-    circle.update(ctx, bar);
+    wall.update(ctx);
+    circle.update(ctx, bar, wall);
     bar.update(ctx);
     if (keys.Space.pressed && run === false) {
         run = true;

@@ -6,12 +6,14 @@ const LEN = 96 ;
 const DEMI_LEN = LEN / 2;
 
 export default class Bar extends Block {    
-    constructor() {                
-        super({ x: DEMI_CANVAS_WIDTH - DEMI_LEN , y: CANVAS_HEIGHT - TWO_BLOCK }, DEMI_BLOCK / 2);
+    constructor(color) {                
+        super({ x: DEMI_CANVAS_WIDTH - DEMI_LEN , y: CANVAS_HEIGHT - TWO_BLOCK }, color, DEMI_BLOCK / 2);
         this.velocity = { x: 0, y: 0 };
         this.width = LEN;
-        this.color = Color.hex("#0000FF").withAlpha(0.5).toRgba()
+        this.color = Color.hex(color).withAlpha(0.5).toRgba()
     }
+
+    
 
     onKeyPressed(keys) {
         if (keys.ArrowRight.pressed) {
